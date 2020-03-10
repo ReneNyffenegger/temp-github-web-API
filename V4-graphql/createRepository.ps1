@@ -9,6 +9,8 @@ $response = invoke-webrequest `
             "mutation { createRepository ( input: { name: \"the-foo-repo\", visibility: PRIVATE } ) { clientMutationId } } " 
           }'
           
+$response.content          
+          
 #
 #  Use -authentication in PowerShell 6 or 7 ?
 #   -authentication bearer -token $secString   `
