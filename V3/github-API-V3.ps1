@@ -52,10 +52,18 @@ function uploadFileToGithub($localPath, $localFilename, $repoPath, $repoFilename
       # expected: 201 Created
       # 
         write-verbose "$($response.StatusCode) $($response.StatusDescription)"
+        return
    }
+   write-verbose "file seems to exit, updating it"
+   $sha = $response.sha
+   write-verbose "SHA = $sha"
 
-#   $response
+   $body = '{{"message": "{0}", "content": "{1}", "sha": "{2}" }}' -f $message, $base64, $sha
 
-#   $response.GetType().FullName
+   $response = invoke-webrequest $url                                               `
+     -method          PUT                                                           `
+     -contentType     application/json                                              `
+     -headers       @{Authorization = "bearer $token"}                              `
+     -body            $body
 
 }
