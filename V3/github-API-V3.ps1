@@ -6,9 +6,6 @@
 set-strictMode -version 2
 
 function uploadFileToGithub($localPath, $localFilename, $repoPath, $repoFilename, $repoName, $repoOwner, $message, $token) {
-
-#  [Microsoft.PowerShell.Commands.HtmlWebResponseObject] $response
-
    #
    #      File content must be represented in base 64
    #
