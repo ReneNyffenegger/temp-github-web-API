@@ -1,4 +1,6 @@
 #
+#   upload-file-to-github-repo . upload-file-to-github-repo.ps1 V3 upload-file-to-github-repo.ps1 temp-github-web-API ReneNyffenegger 'n/a' $env:githubAPItoken
+#
 #   Assign 'continue' to preference variable $verbosePreference
 #   for verbose output.
 #
@@ -14,7 +16,7 @@ function upload-file-to-github-repo($localPath, $localFilename, $repoPath, $repo
    #
    #      File content must be represented in base 64
    #
-   $localFileAbsolutePath = resolve-path "$localPath/$localFilename"
+   $localFileAbsolutePath = (resolve-path "$localPath/$localFilename").providerPath
 
    write-verbose "localFileAbsolutePath: $localFileAbsolutePath"
 
