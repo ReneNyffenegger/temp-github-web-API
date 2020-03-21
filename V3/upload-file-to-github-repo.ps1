@@ -1,5 +1,5 @@
 #
-#   upload-file-to-github-repo . upload-file-to-github-repo.ps1 V3 upload-file-to-github-repo.ps1 temp-github-web-API ReneNyffenegger 'n/a' $env:githubAPItoken
+#   upload-file-to-github-repo . upload-file-to-github-repo.ps1 /V3 upload-file-to-github-repo.ps1 temp-github-web-API ReneNyffenegger 'n/a' $env:githubAPItoken
 #
 #   Assign 'continue' to preference variable $verbosePreference
 #   for verbose output.
@@ -7,11 +7,14 @@
 
 set-strictMode -version 2
 
-function upload-file-to-github-repo($localPath, $localFilename, $repoPath, $repoFilename, $repoName, $repoOwner, $message, $token) {
+function upload-file-to-github-repo($localPath, $localFilename, [String] $repoPath, $repoFilename, $repoName, $repoOwner, $message, $token) {
    #
-   #   Note:
-   #     $repoPath must (currently) not start with a slash. 
+   #  $repoPath must start with a slash. 
    #
+   if ($repoPath.substring(0, 1) -ne '/') {
+      write-error "repoPath $repoPath does not begin with a slash"
+      return
+   }
 
    #
    #      File content must be represented in base 64
@@ -35,7 +38,15 @@ function upload-file-to-github-repo($localPath, $localFilename, $repoPath, $repo
        return
    }
 
-   $url = "https://api.github.com/repos/$repoOwner/$repoName/contents/$repoPath/$repoFilename"
+
+   #
+   #   Make sure repoPath ends in slash
+   #
+   if ( $repoPath.substring($repoPath.length-1) -ne '/') {
+      $repoPath = "$repoPath/"
+   }
+
+   $url = "https://api.github.com/repos/$repoOwner/$repoName/contents$repoPath$repoFilename"
 
    try {
 
