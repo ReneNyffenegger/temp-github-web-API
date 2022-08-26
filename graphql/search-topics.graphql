@@ -7,7 +7,9 @@
 #
 query {
   search(type:  REPOSITORY,
-        query: "topic:viaferrata",
+#       query: "topic:viaferrata",
+#       query: "topic:ecs",
+        query: "topic:ecs topic:go",  # Mulitple topcis
         last :  50
   ) {
     repos: edges {
