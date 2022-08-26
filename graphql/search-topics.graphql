@@ -1,0 +1,21 @@
+#
+# https://stackoverflow.com/questions/57451102/how-to-fetch-all-repositories-with-specific-topic-using-github-graphql-api
+#
+# $json = .\make-request.ps1 $githubToken .\search-topics.graphql
+#
+# $json.search.repos
+#
+query {
+  search(type:  REPOSITORY,
+        query: "topic:viaferrata",
+        last :  50
+  ) {
+    repos: edges {
+      repo: node {
+        ... on Repository {
+          url
+        }
+      }
+    }
+  }
+}

@@ -25,7 +25,8 @@ else {
    # Apparently, graphql and/or github does not allow new lines in the query string.
    # So, replace them
    #
-$query = $query_nl.replace("`n", '').replace("`r", '')
+$query = $query_nl -replace '(?m)#.*$', ''
+$query = $query.replace("`n", '').replace("`r", '')
 # $query = ($query_nl -replace "`n", "") -replace "`r", ''
 
    #
@@ -46,5 +47,15 @@ $response = invoke-webrequest `
    -headers      @{Authorization = "Bearer $token"} `
    -body           $body
 
-# convertFrom-json $response.content
-(convertFrom-json ($response.content)).data
+
+$json = convertFrom-json $response.content
+
+
+if ($json.psObject.properties['errors']) {
+   throw $json.errors.message
+}
+
+# $response
+
+# (convertFrom-json ($response.content)).data
+$json.data
