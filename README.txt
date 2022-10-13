@@ -6,3 +6,6 @@ compare with gitlab Web API:
 
 Search multiple topics
   https://gist.github.com/usametov/af8f13a351a66fb05a9895f11417dd9d
+
+Create a repo with Powershell
+  https://medium.com/objectsharp/create-a-github-repo-with-powershell-27fc2e697a3d
